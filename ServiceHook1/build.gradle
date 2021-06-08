@@ -49,10 +49,8 @@ tasks.withType(Javadoc) {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile project(':mypluginlibrary')
-
-    compile 'com.google.code.gson:gson:2.3.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.2.0'
+    implementation project(':mypluginlibrary')
+    implementation 'com.google.code.gson:gson:2.3.1'
 }

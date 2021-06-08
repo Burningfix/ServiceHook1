@@ -6,6 +6,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.jianqiang.mypluginlibrary.L;
+
 public class MyService2 extends Service {
     private int count;
     private boolean quit;
@@ -20,14 +22,14 @@ public class MyService2 extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e("jianqiang", "Service is binded");
+        L.i("MyService2.onBind");
         return binder;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("baobao", "Service is created");
+        L.i("MyService2.onCreate");
 
         new Thread() {
             @Override
@@ -47,7 +49,7 @@ public class MyService2 extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.e("baobao", "Service is Unbind");
+        L.i("MyService2.onUnbind");
         return true;
     }
 
@@ -55,6 +57,6 @@ public class MyService2 extends Service {
     public void onDestroy() {
         super.onDestroy();
         quit = true;
-        Log.e("baobao", "Service is Destroy");
+        L.i("MyService2.onDestroy");
     }
 }

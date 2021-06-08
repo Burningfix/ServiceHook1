@@ -1,12 +1,12 @@
-package jianqiang.com.activityhook1.ams_hook;
+package jianqiang.com.activityhook1.ams;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.util.Log;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.HashMap;
+
+import com.example.jianqiang.mypluginlibrary.L;
 import jianqiang.com.activityhook1.UPFApplication;
 
 class MockClass1 implements InvocationHandler {
@@ -25,7 +25,7 @@ class MockClass1 implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        Log.e("bao", method.getName());
+        L.i("MockClass1.invoke method:" + method.toString());
 
         if ("startService".equals(method.getName())) {
             // 只拦截这个方法
@@ -43,6 +43,7 @@ class MockClass1 implements InvocationHandler {
             //get StubService form UPFApplication.pluginServices
             Intent rawIntent = (Intent) args[index];
             String rawServiceName = rawIntent.getComponent().getClassName();
+            L.i("MockClass1.invoke startService rawIntent:" + rawIntent);
 
             String stubServiceName = UPFApplication.pluginServices.get(rawServiceName);
 
@@ -50,11 +51,12 @@ class MockClass1 implements InvocationHandler {
             ComponentName componentName = new ComponentName(stubPackage, stubServiceName);
             Intent newIntent = new Intent();
             newIntent.setComponent(componentName);
+            L.i("MockClass1.invoke startService newIntent:" + newIntent);
 
             // Replace Intent, cheat AMS
             args[index] = newIntent;
+            L.i("MockClass1.invoke hook startService success");
 
-            Log.d(TAG, "hook success");
             return method.invoke(mBase, args);
         } else if ("stopService".equals(method.getName())) {
             // 只拦截这个方法
@@ -73,16 +75,18 @@ class MockClass1 implements InvocationHandler {
             Intent rawIntent = (Intent) args[index];
             String rawServiceName = rawIntent.getComponent().getClassName();
             String stubServiceName = UPFApplication.pluginServices.get(rawServiceName);
+            L.i("MockClass1.invoke stopService rawIntent:" + rawIntent);
 
             // replace Plugin Service of StubService
             ComponentName componentName = new ComponentName(stubPackage, stubServiceName);
             Intent newIntent = new Intent();
             newIntent.setComponent(componentName);
+            L.i("MockClass1.invoke stopService newIntent:" + newIntent);
 
             // Replace Intent, cheat AMS
             args[index] = newIntent;
 
-            Log.d(TAG, "hook success");
+            L.i("MockClass1.invoke hook stopService success");
             return method.invoke(mBase, args);
         }
 

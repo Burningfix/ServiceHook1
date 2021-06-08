@@ -10,14 +10,12 @@ public class UPFApplication extends Application {
 
     private static Context sContext;
 
-    public static HashMap<String, String> pluginServices;
+    public static HashMap<String, String> pluginServices = new HashMap<String, String>();
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         sContext = base;
-
-        pluginServices = new HashMap<String, String>();
     }
 
     public static Context getContext() {

@@ -1,15 +1,19 @@
-package jianqiang.com.activityhook1;
+package jianqiang.com.activityhook1.defineservice;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-public class StubService7 extends Service {
+import com.example.jianqiang.mypluginlibrary.L;
+
+public class StubService3 extends Service {
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        L.i("StubService3.onBind() intent:" + intent);
+
         return null;
     }
 }

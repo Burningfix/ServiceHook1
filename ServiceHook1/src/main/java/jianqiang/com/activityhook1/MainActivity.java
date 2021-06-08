@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.example.jianqiang.mypluginlibrary.L;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 
-import jianqiang.com.activityhook1.ams_hook.AMSHookHelper;
+import jianqiang.com.activityhook1.ams.AMSHookHelper;
 import jianqiang.com.activityhook1.classloder_hook.BaseDexClassLoaderHookHelper;
 
 public class MainActivity extends Activity {
@@ -31,23 +33,31 @@ public class MainActivity extends Activity {
         findViewById(R.id.btnStart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setComponent(
-                        new ComponentName("jianqiang.com.testservice1",
-                                "jianqiang.com.testservice1.MyService1"));
+                try {
+                    Intent intent = new Intent();
+                    intent.setComponent(
+                            new ComponentName("jianqiang.com.testservice1",
+                                    "jianqiang.com.testservice1.MyService1"));
 
-                startService(intent);
+                    startService(intent);
+                } catch (Throwable e) {
+                    L.i(e);
+                }
             }
         });
 
         findViewById(R.id.btnStop).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent();
-                intent.setComponent(
-                        new ComponentName("jianqiang.com.testservice1",
-                                "jianqiang.com.testservice1.MyService1"));
-                stopService(intent);
+                try {
+                    final Intent intent = new Intent();
+                    intent.setComponent(
+                            new ComponentName("jianqiang.com.testservice1",
+                                    "jianqiang.com.testservice1.MyService1"));
+                    stopService(intent);
+                } catch (Throwable e) {
+                    L.i(e);
+                }
             }
         });
     }
@@ -66,18 +76,20 @@ public class MainActivity extends Activity {
             AMSHookHelper.hookActivityThread();
 
             String strJSON = Utils.readZipFileString(dexFile.getAbsolutePath(), "assets/plugin_config.json");
-            if(strJSON != null && !TextUtils.isEmpty(strJSON)) {
+            L.i("MainActivity.attachBaseContext() strJSON:" + strJSON);
+
+            if (strJSON != null && !TextUtils.isEmpty(strJSON)) {
                 JSONObject jObject = new JSONObject(strJSON.replaceAll("\r|\n", ""));
                 JSONArray jsonArray = jObject.getJSONArray("plugins");
-                for(int i = 0; i< jsonArray.length(); i++) {
-                    JSONObject jsonObject = (JSONObject)jsonArray.get(i);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     UPFApplication.pluginServices.put(
                             jsonObject.optString("PluginService"),
                             jsonObject.optString("StubService"));
                 }
             }
         } catch (Throwable e) {
-            e.printStackTrace();
+            L.i(e);
         }
     }
 }

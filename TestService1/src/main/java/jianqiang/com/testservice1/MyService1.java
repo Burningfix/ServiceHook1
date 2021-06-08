@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.jianqiang.mypluginlibrary.L;
+
 public class MyService1 extends Service {
     public MyService1() {
     }
@@ -17,18 +19,18 @@ public class MyService1 extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("baobao", "Service is created");
+        L.i("MyService1.onCreate");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("baobao", "Service is started");
+        L.i("MyService1.onStartCommand intent: " + intent);
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("baobao", "Service is Destroy");
+        L.i("MyService1.onDestroy  ");
     }
 }

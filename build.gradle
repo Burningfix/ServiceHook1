@@ -10,8 +10,6 @@ buildscript {
         maven { url 'https://dl.bintray.com/umsdk/release' }
     }
     dependencies {
-//         need sync here and buildSrc/build.gradle
-//         if modify need sync modify gradle/wrapper/gradle-wrapper.properties
         classpath "com.android.tools.build:gradle:3.3.3"
     }
 }

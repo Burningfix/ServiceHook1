@@ -1,4 +1,4 @@
-package jianqiang.com.activityhook1.ams_hook;
+package jianqiang.com.activityhook1.ams;
 
 import android.os.Handler;
 

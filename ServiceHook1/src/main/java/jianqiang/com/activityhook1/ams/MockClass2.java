@@ -1,13 +1,14 @@
-package jianqiang.com.activityhook1.ams_hook;
+package jianqiang.com.activityhook1.ams;
 
 import android.content.pm.ServiceInfo;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.example.jianqiang.mypluginlibrary.RefInvoke;
 
+import com.example.jianqiang.mypluginlibrary.L;
 import jianqiang.com.activityhook1.UPFApplication;
+
 
 class MockClass2 implements Handler.Callback {
 
@@ -20,7 +21,7 @@ class MockClass2 implements Handler.Callback {
     @Override
     public boolean handleMessage(Message msg) {
 
-        Log.d("baobao4321", String.valueOf(msg.what));
+        L.i("MockClass2.handleMessage [" + msg.what + "] msg:" + msg);
         switch (msg.what) {
 
             // ActivityThread里面 "CREATE_SERVICE" 这个字段的值是114
@@ -39,12 +40,13 @@ class MockClass2 implements Handler.Callback {
 
         Object obj = msg.obj;
         ServiceInfo serviceInfo = (ServiceInfo) RefInvoke.getFieldObject(obj, "info");
+        L.i("MockClass2.handleCreateService serviceInfo:" + serviceInfo);
 
         String realServiceName = null;
 
         for (String key : UPFApplication.pluginServices.keySet()) {
             String value = UPFApplication.pluginServices.get(key);
-            if(value.equals(serviceInfo.name)) {
+            if (value.equals(serviceInfo.name)) {
                 realServiceName = key;
                 break;
             }

@@ -66,11 +66,11 @@ public class MainActivity extends Activity {
             AMSHookHelper.hookActivityThread();
 
             String strJSON = Utils.readZipFileString(dexFile.getAbsolutePath(), "assets/plugin_config.json");
-            if(strJSON != null && !TextUtils.isEmpty(strJSON)) {
+            if (strJSON != null && !TextUtils.isEmpty(strJSON)) {
                 JSONObject jObject = new JSONObject(strJSON.replaceAll("\r|\n", ""));
                 JSONArray jsonArray = jObject.getJSONArray("plugins");
-                for(int i = 0; i< jsonArray.length(); i++) {
-                    JSONObject jsonObject = (JSONObject)jsonArray.get(i);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                     UPFApplication.pluginServices.put(
                             jsonObject.optString("PluginService"),
                             jsonObject.optString("StubService"));
@@ -78,6 +78,9 @@ public class MainActivity extends Activity {
             }
         } catch (Throwable e) {
             e.printStackTrace();
+        }
+        public void LOGE (String info){
+
         }
     }
 }

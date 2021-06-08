@@ -16,7 +16,6 @@ public class UPFApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         sContext = base;
-
         pluginServices = new HashMap<String, String>();
     }
 
